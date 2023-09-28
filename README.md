@@ -16,7 +16,9 @@ Additionally, User Auth and Transactional Email are also baked in. You can add s
 
 ![image](https://github.com/getnokori/api/assets/1544125/d5f4cfb1-5f35-4f9d-b4aa-1b72124b459c)
 
-Be sure to check out `./src/routes/index.ts` to see the available endpoints and gain a better understanding of what functionality is available. HubPrompts is an especially cool feature.
+Be sure to check out `./src/routes/index.ts` to see the available endpoints and gain a better understanding of what functionality is available.
+
+[HubPrompts](https://github.com/getnokori/api/blob/dffc7a1d741aea0327b07c5b969bef6aaad10383/src/routes/hubs/index.ts#L71) is an especially interesting endpoint. It uses LLMs and your connected data sources to answer questions like, "What were sales yesterday?" with repeatable accuracy.
 
 ## Technical Documentation
 
