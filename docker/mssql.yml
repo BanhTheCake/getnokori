@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  db:
+    project: mariadb
+    image: sql_server_compose-mssql-2019
+    restart: always
+    environment:
+      SA_PASSWORD: "test_user_pass"
+      ACCEPT_EULA: "Y"
+    ports:
+      - '1433:1433'
+    volumes: 
+      - db:/var/lib/mssql
+volumes:
+  db:
+    driver: local
+    external: false

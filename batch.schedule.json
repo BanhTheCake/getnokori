@@ -1,0 +1,36 @@
+{
+  "apps" : [
+  {
+    "name": "Mail - Domain Verify",
+     "script": "jobs/mail/verifyDNS.mail.ts",
+     "instances": 1,
+     "interpreter" : "tsx",
+     "cron_restart": "*/1 * * * *",
+     "env": {
+       "NODE_ENV": "development"
+     },
+     "env_production": {
+       "NODE_ENV": "production"
+     },
+     "autorestart" : false,
+     "log_date_format" : "YYYY-MM-DD HH:mm Z",
+     "time" : true
+   },
+   {
+     "name": "Mail - Doman Re-Verify",
+      "script": "jobs/mail/reverifyDNS.mail.ts",
+      "instances": 1,
+      "interpreter" : "tsx",
+      "cron_restart": "0 0 * * *",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      },
+      "autorestart" : false,
+      "log_date_format" : "YYYY-MM-DD HH:mm Z",
+      "time" : true
+    }
+  ]
+}

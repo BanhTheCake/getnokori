@@ -1,0 +1,88 @@
+# This workflow checks out develop branch and pushes it to development servers
+
+name: Deploy api.nokori.com.com
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+# We do not use pull_request here because that triggers on request opening, not merge. Merging results in a push.
+on:
+  push:
+    branches: [ production ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "deploy"
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-22.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Builds the project using Node and runs unit tests and linting.
+      - name: Checkout Project
+        uses: actions/checkout@main
+        with:
+          ref: refs/heads/production
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.12.1'
+      # - name: install Jest Types
+      #   run: npm i -D @types/jest ts-jest jest
+      - name: Install Dependencies
+        run: npm i
+      - name: Move node modules
+        run: cp build/Release/cosine_similarity.node src/bindings/vectors/cosine_similarity.node
+      - name: Build the TS Code
+        run: npm run build-ts
+      # - name: Run Test Suites
+      #   run: npm run tests
+      - name: Build ecosystem config
+        run: node ecosystem/ecosystem.config.production.cjs
+      - name: Drop ecosystem files
+        run: rm -R ecosystem
+      - name: build env
+        run: npm run gen-env
+      # - name: Copy static assets to Dist
+      #   run: cp -r .env dist; cp package.json dist; cp ecosystem.config.json dist
+     
+      
+      # - name: Create package
+      #   run: touch "$(date '+%Y-%m-%d')-api.qa.loladb.com.tar.gz"
+      # - name: Package up code(testing)
+      #   run: tar --exclude="$(date '+%Y-%m-%d')-api.qa.loladb.com.tar.gz" -zcvf "$(date '+%Y-%m-%d')-api.qa.loladb.com.tar.gz" .
+
+      - name: Make deploy dir
+        run: mkdir deploy
+      - name: copy files for deployment
+        run: rsync -av --progress . deploy --exclude deploy --exclude "./"
+      - name: List Contents (Sanity Check)
+        run: ls -hal
+      - name: Package up code
+        run: tar --exclude=".git*" -zcvf "$(date '+%Y-%m-%d')-nokori-api.tar.gz" deploy
+      
+      - name: Deploy to prod via rsync
+        if: ${{ success() }}
+        uses: burnett01/rsync-deployments@3.0
+        with:
+          switches: -avzr --delete --exclude=".git"
+          path: "$(date '+%Y-%m-%d')-nokori-api.tar.gz"
+          remote_path: ~/deploy/${{deploy_target}}
+          remote_host: ${{ secrets.PROD_IP}}
+          remote_port: 22
+          remote_user: ubuntu
+          remote_key: ${{ secrets.PROD_SSH_KEY }}
+      - name: Restart App via PM2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PROD_IP}}
+          username: 'ubuntu'
+          key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            cd ~/deploy/${{deploy_target}}
+            tar -xzf "$(date '+%Y-%m-%d')-nokori-api.tar.gz" -C .
+            cd deploy
+            cp -ua . ~/app/${{deploy_target}}
+            cd ~/app/${{deploy_target}}
+            rm -rf ~/deploy/${{deploy_target}}/*
+            pm2 restart ecosystem.config.production.json --env production --time --log-date-format "YYYY-MM-DDTHH:mm:ss.SSS Z"

@@ -1,0 +1,27 @@
+export enum SQLCommands {
+  ALTER = 'ALTER',
+  COMMIT = 'COMMIT',
+  CREATE = 'CREATE',
+  DEALLOCATE = 'DEALLOCATE',
+  DELETE = 'DELETE',
+  DROP = 'DROP',
+  EXECUTE = 'EXECUTE',
+  EXPLAIN = 'EXPLAIN',
+  GRANT = 'GRANT',
+  INSERT = 'INSERT',
+  LOCK = 'LOCK',
+  PREPARE = 'PREPARE',
+  RENAME = 'RENAME',
+  REVOKE = 'REVOKE',
+  ROLLBACK = 'ROLLBACK',
+  SAVEPOINT = 'SAVEPOINT',
+  SELECT = 'SELECT',
+  SET = 'SET',
+  SHOW = 'SHOW',
+  START = 'START',
+  TRUNCATE = 'TRUNCATE',
+  UNLOCK = 'UNLOCK',
+  UPDATE = 'UPDATE',
+}
+
+export default SQLCommands

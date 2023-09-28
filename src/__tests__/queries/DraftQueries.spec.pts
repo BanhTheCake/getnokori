@@ -1,0 +1,65 @@
+import ServerEnvironments from '@/enums/ServerEnvs.enum'
+process.env.TZ = process.env.TZ || 'UTC'
+process.env.NODE_ENV = process.env.NODE_ENV || ServerEnvironments.DEV
+
+import app from '@/app'
+import request from 'supertest'
+import QueryMocks from '@/__tests__/queries/mocks/queries'
+
+const APIKey = 'lola_pk_test_TAKPkYzqUdhu3gg-weJe0P2hm8Jcg2RPXXkg'
+let Token = ''
+
+beforeAll(async () => {
+  const response = await request(app)
+    .post('/v1/auth/login')
+    .set({ 'x-nokori-api-key': APIKey })
+    .send({
+      strategy: 'password',
+      email: 'wes+2788@nokori.com',
+      password: '9j4f19j3d3d9j3d9',
+    })
+  Token = response.body.data.session.accessToken
+})
+
+describe('MySQL', () => {
+
+  it('should execute a draft query request w/o context', (done) => {
+    request(app)
+      .post('/v1/queries/drafts/execute')
+      .set({
+        'x-nokori-api-key': APIKey,
+        'Authorization': `Bearer ${Token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      })
+      .send(QueryMocks.MySQLSelectAll)
+      .expect(200, done)
+  })
+
+  it('should execute a draft query request w context', (done) => {
+    request(app)
+      .post('/v1/queries/drafts/execute')
+      .set({
+        'x-nokori-api-key': APIKey,
+        'Authorization': `Bearer ${Token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      })
+      .send(QueryMocks.MySQLSelectAllWContext)
+      .expect(200, done)
+  })
+
+  it('should execute a draft query request w greater_than constraints', (done) => {
+    request(app)
+      .post('/v1/queries/drafts/execute')
+      .set({
+        'x-nokori-api-key': APIKey,
+        'Authorization': `Bearer ${Token}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      })
+      .send(QueryMocks.MySQLSelectAllWGreaterThanConstraints)
+      .expect(200, done)
+  })
+  
+})

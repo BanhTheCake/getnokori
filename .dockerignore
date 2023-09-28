@@ -1,0 +1,7 @@
+node_modules
+_scratch
+.github
+.vscode
+dist
+docker
+lib

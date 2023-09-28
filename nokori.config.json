@@ -1,0 +1,35 @@
+{
+	"hubs": [
+		{
+			"hubId": "lola.hub.ekhlpspxUsNpkksZ",
+			"sources": [
+				{
+					"sourceId": "lola.src.agXpBTw6KwoKvpKY",
+					"schemas": ["loladb_app"]
+				}
+			]
+		}
+	],
+	"types": {
+		"build": {
+			"baseUrl": "./src",
+			"format":{
+				"preserveIdentifierCasing": false,
+				"tabsOrSpaces": "tabs",
+				"indentation": 2
+			},
+			"nullables" : {
+				"format" : "unionNull" 
+			},
+			"types" : {
+				"outputStrategy": "separateFiles",
+				"outputDir": "./types/interfaces",
+				"filePerEntity": true,
+				"parentFolder": "schemaName"
+			},
+			"enums" : {
+				"prependWithFieldName": false
+			}
+		}
+	}
+}

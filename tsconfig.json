@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["esnext", "es6", "dom"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "incremental": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": false,
+    "sourceMap": true,
+    "strict" :true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "outDir": "dist/",
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types" : ["jest", "node"],
+    "typeRoots": ["src/types", "node_modules/@types"]
+  },
+  "include": ["src/**/*"],
+  "exclude" : ["_scratch", "dist", "node_modules"],
+  "watchOptions": {
+    "excludeDirectories": ["node_modules", "dist"]
+  }
+}

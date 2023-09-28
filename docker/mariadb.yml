@@ -1,0 +1,22 @@
+# Use root/example as user/password credentials
+version: '3.8'
+
+services:
+
+  lola_mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - 3307:3307
+    volumes:
+        - mariadb_volume:/var/lib/mariadb-docker
+    environment:
+      MARIADB_USER: test_user
+      MARIADB_PASSWORD: test_pass
+      MARIADB_ROOT_PASSWORD: example
+      MYSQL_TCP_PORT: 3307
+      MYSQL_UNIX_PORT: 3307
+    
+volumes:
+  mariadb_volume:
+    external: false
