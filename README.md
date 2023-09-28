@@ -1,5 +1,7 @@
 # Nokori API
 
+Nokori is now Open Source!
+
 There be dragons here - this repo will likely need some touching up before it's simple to stand up locally. PRs welcome.
 
 ## About
