@@ -4,7 +4,7 @@ There be dragons here - this repo will likely need some touching up before it's 
 
 ## About
 
-The Nokori API is a universal data layer that allows developers to connect SQL databases and any third party API via a very intuitive UI in seconds, and then consume queries/endpoints globally without boilerplate code via the [SDK](https://www.npmjs.com/package/@nokori/js-sdk) or API.
+The Nokori API is a universal data layer that allows developers to connect SQL databases and any third party API via a very intuitive [UI](https://github.com/getnokori/nokori-ui) in seconds, and then consume queries/endpoints globally without boilerplate code via the [SDK](https://www.npmjs.com/package/@nokori/js-sdk) or API.
 
 ![image](https://github.com/getnokori/api/assets/1544125/4c3b8d63-d2ab-4857-9f79-5ddabbe69c15)
 
