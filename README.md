@@ -3,9 +3,10 @@
 There be dragons here - this repo will likely need some touching up before it's simple to stand up locally. PRs welcome.
 
 ## About
-![image](https://github.com/getnokori/api/assets/1544125/4c3b8d63-d2ab-4857-9f79-5ddabbe69c15)
 
 The Nokori API is a universal data layer that allows developers to connect SQL databases and any third party API via a very intuitive UI in seconds, and then consume queries/endpoints globally without boilerplate code via the SDK.
+
+![image](https://github.com/getnokori/api/assets/1544125/4c3b8d63-d2ab-4857-9f79-5ddabbe69c15)
 
 ![image](https://github.com/getnokori/api/assets/1544125/bc4ed21a-020d-41f5-a636-14a5a767dc3c)
 
